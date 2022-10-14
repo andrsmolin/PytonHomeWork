@@ -18,11 +18,7 @@ def chek_inp(elem, check_list):
     
     
 def chek_empty(fld, x, y):
-    
-    if (fld[x][y]).count(' ') == 1:
-        return True
-    else:
-        return False
+   return fld[x][y] == ' '
     
 
 def check_win(elem, fld):
