@@ -1,4 +1,4 @@
-from cProfile import label
+
 from operator import index
 import os
 import random
@@ -10,6 +10,8 @@ import math
 def work5():
     a = input('Введите вещественное число: ')
     print(sum([int(i) for i in a if i != ',']))
+
+
 # work5()
 
 # Напишите программу, которая принимает на вход число N и выдает набор произведений чисел от 1 до N.
@@ -57,7 +59,7 @@ def work1():
 
 
 def mult_position():
-    def filt(a, b):
+    def filtr(a, b):
         c = []
         for i in range(0, len(b)):
             c.append(a[b[i]])
@@ -72,17 +74,9 @@ def mult_position():
     data = f.read()
     f.close
     pos = [int(i) for i in data if i != '\n']
-    print(pos)
+    # print(pos)
 
-    filt(list_n, pos)
-    # list_new = [i for i in list_n if pos.count(list_n.index(i)) > 0]
-    # cort = [(i, j) for i in pos for j in list_n if list_n.index(j) == pos[i]]
-    # list_pos = [i for i in list_n if list_n.index(i) == pos[i]]
-    # # print(pos)
-    # # mult = math.prod(filter(lambda i: list_n.index(i) == pos[i], list_n))
-    # # cort = list(zip(pos, list(filter(lambda i: list_n.index(i) == pos[i], list_n))))
-    # print(list_pos)
+    print(math.prod(filtr(list_n, pos)))
 
 
-mult_position()
-# Реализуйте алгоритм перемешивания списка.
+# mult_position()
