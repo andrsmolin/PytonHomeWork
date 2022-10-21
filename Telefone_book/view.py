@@ -8,10 +8,10 @@
 def check_input(input_text):
     while True:
         number = input(f"{input_text}")
-        if number.isdigit() and 1 <= int(number) <= 4:
+        if number.isdigit() and 1 <= int(number) <= 5:
             break
         else:
-            print("Неверный ввод типа работы книги. Пожалуйста введите цифру от 1 до 4.")
+            print("Неверный ввод типа работы книги. Пожалуйста введите цифру от 1 до 5.")
     return int(number)
 
 
@@ -22,6 +22,7 @@ def start():
     print("2 - добавить новый контакт")
     print("3 - удалить контакт")
     print("4 - дополнить контакт")
+    print("5 - экспорт тел. книги в файл в формате html")
 
     type = check_input("Тип работы: ")
 
