@@ -1,9 +1,11 @@
 # Вычислить число c заданной точностью d
 # - при $d = 0.001, π = 3.141.$    $10^{-1} ≤ d ≤10^{-10}$
 
+from operator import length_hint
 from random import randint
 from cmath import pi
 import math
+from re import U
 
 
 def input_numbers(input_text):
@@ -104,4 +106,4 @@ def work5():
     data2.close
 
 
-work5()
+# work5()
