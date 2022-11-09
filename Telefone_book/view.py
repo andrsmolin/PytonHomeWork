@@ -1,8 +1,5 @@
-# type = ""
-#surname = ""
-# name = ""
-# number = ""
-# status = ""
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
 
 def check_input(input_text):
@@ -16,22 +13,18 @@ def check_input(input_text):
 
 
 def start():
-    # global type
-    print("Выберите тип работы с телефонным справочником: ")
-    print("1 - посмотреть контакт")
-    print("2 - добавить новый контакт")
-    print("3 - удалить контакт")
-    print("4 - дополнить контакт")
-    print("5 - экспорт тел. книги в файл в формате html")
+    # return
+    data = "Выберите тип работы с телефонным справочником:\n /1 - посмотреть контакт \n /2 - добавить новый контакт \n /3 - удалить контакт \n"
 
-    type = check_input("Тип работы: ")
+    # type = check_input("Тип работы: ")
 
-    return type
+    return data
 
 
-def input_surname():  # метод просит ввести фамилию
-    # global surname
-    surname = input("Введите фамилию: ")
+def input_surname(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    surname = update.message.text
+    update.message.reply_text(f'{surname}, невод')
+    # surname = input("Введите фамилию: ")
     return surname
 
 

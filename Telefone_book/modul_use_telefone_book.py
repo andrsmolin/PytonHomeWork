@@ -1,120 +1,86 @@
+# from os import statvfs_result
+# from unicodedata import name
 import view as v
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
-id_person = ""
-surname = ""
-name_person = ""
-number_person = ""
-status_person = ""
-
-
-def init(id, sur, name, num, stat):
-    global id_person
-    global name_person
-    global number_person
-    global status_person
-    global surname
-    id_person = id
-    name_person = name
-    number_person = num
-    status_person = stat
-    surname = sur
+# async def run_choise(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+#     global msg
+#     msg = update.message.text
+#     # c.init(msg)
+#     if c.check_input(msg):
+#         c.choise_type(int(msg))
+#     else:
+#         await update.message.reply_text(f'{update.effective_user.first_name}, неверный ввод')
 
 
-def contact(func):  # общий метод дописать и прочитать
-    strings = return_data().split("\n")
+def read():
+    tel_dect = return_data()
     surname = v.input_surname()
-    for i in range(0, len(strings)):
-        if strings[i].find(surname) > 0:
-            func(strings[i])
-            break
+    count = 0
+    for i in range(1, len(tel_dect)+1):
+        if tel_dect[i]['surname'].find(surname) > 0:
+            print(tel_dect[i])  # ['surname']['name']['telefon']['status'])
+            count += 1
     else:
-        print("Контакт не найден")
+        if count == 0:
+            print("Контакт не найден")
 
 
-def read1(str):
-    print(str)
-
-
-def add(str):
-    number_person = v.input_number()
-    new_data = return_data().replace(str, str + " " + number_person)
-    f = open('telef.txt', 'w')
-    f.write(new_data)
-    f.close
-    print(new_data)
-
-
-def delete(str):
-    list_data = str.split()
-    del list_data[1:]
-    new_str = list_data[0] + ' delete'
-    new_data = return_data().replace(str, new_str)
-    f = open('telef.txt', 'w')
-    f.write(new_data)
-    f.close
-    print(new_data)
+def delete():
+    idd = int(v.input_id())
+    tel_dect = return_data()
+    tel_dect[idd] = {'idd': idd, 'surname': 'delete',
+                     'name': 'delete', 'telefon': '_', 'status': '_'}
+    exp_dect(tel_dect)
 
 
 def create():
-    strings = return_data().split("\n")
+    tel_dect = return_data()
     surname = v.input_surname()
+    name = v.input_name()
     number_person = v.input_number()
-    for i in range(0, len(strings)):
-        if strings[i].find('delete') > 0:
-            list_data = strings[i].split()
-            new_str = (f'{list_data[0]} {surname} {number_person}')
-            new_data = return_data().replace(strings[i], new_str)
-            f = open('telef.txt', 'w')
-            f.write(new_data)
-            f.close
-            break
-    else:
-        new_str = (f'\n{len(strings)+1} {surname} {number_person}')
-        f = open('telef.txt', 'a')
-        f.writelines(new_str)
-        f.close
-        print(new_str)
+    status = v.input_status()
+    i = len(tel_dect)+1
+    tel_dect[i] = {'idd': i, 'surname': surname, 'name': name,
+                   'telefon': number_person, 'status': status}
+    exp_dect(dict(tel_dect))
+    print(tel_dect[i])
+
+
+def add():
+    tel_dect = return_data()
+    surname = v.input_surname()
+    name = v.input_name()
+    number_person = v.input_number()
+    status = v.input_status()
+    i = len(tel_dect)+1
+    tel_dect[i] = {'idd': i, 'surname': surname, 'name': name,
+                   'telefon': number_person, 'status': status}
+    exp_dect(dict(tel_dect))
+    print(tel_dect[i])
 
 
 def return_data():
-    f = open('telef.txt', 'r')
-    data = f.read()
-    f.close
-    return data
-
-# def add_contact():  # открыть файл, дописать В строку после телефона
-#     f = open('telef.txt', 'r')
-#     data = f.read()
-#     f.close
-#     strings = data.split("\n")
-#     surname = v.input_surname()
-#     for i in range(0, len(strings)):
-#         if strings[i].find(surname) > 0:
-#             number_person = v.input_number()
-#             new_data = data.replace(
-#                 strings[i], strings[i] + " " + number_person)
-#             f = open('telef.txt', 'w')
-#             data = f.write(new_data)
-#             f.close
-#             print(new_data)
-#             break
-#         else:
-#             continue
-#     else:
-#         print("Контакт не найден")
+    imp_dect = {}
+    with open("C:/e/tel.txt", 'r', encoding='utf-8') as f:
+        for line in f:
+            key, sur, nam, tel, stat_ = line.split()
+            imp_dect[int(key)] = {'idd': key, 'surname': sur,
+                                  'name': nam, 'telefon': tel, 'status': stat_}
+    return imp_dect
 
 
-# def read_contact():  # прочитать строку контакта
-#     f = open('telef.txt', 'r')
-#     data = f.read()
-#     f.close
-#     strings = data.split("\n")
-#     surname = v.input_surname()
-#     for i in range(0, len(strings)):
-#         if strings[i].find(surname) > 0:
-#             print(strings[i])
-#             break
-#         else:
-#             continue
-#     else:
-#         print("Контакт не найден")
+def exp_dect(tel_dect):
+    f = open('C:/e/tel.txt', 'w', encoding='utf-8')
+    for i in range(1, len(tel_dect)+1):
+        f.write(str(tel_dect[i]['idd']) + '  ')
+        f.write(tel_dect[i]['surname'] + ' ')
+        f.write(tel_dect[i]['name'] + ' ')
+        f.write(tel_dect[i]['telefon'] + ' ')
+        f.write(tel_dect[i]['status'] + '\n')
+        # print(tel_dect[i]['name'], tel_dect[i]['surname'], tel_dect[i]['telefon'])
+    f.close()
+
+
+tel_dect = {}

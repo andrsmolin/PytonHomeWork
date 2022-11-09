@@ -1,16 +1,30 @@
 import modul_use_telefone_book as mt
-from modul_use_telefone_book import add, read1, delete
+from modul_use_telefone_book import add, read, delete
 import preview as pr
 
+msg = ""
 
-def choise_type(type):
-    if type == 1:
-        return mt.contact(read1)
-    elif type == 2:
+
+def init(msg1):
+    global msg
+    msg = msg1
+
+
+def choise_type(msg1):
+
+    # global msg
+    if msg1 == 1:
+        return mt.read()
+    elif msg1 == 2:
         return mt.create()
-    elif type == 3:
-        return mt.contact(delete)
-    elif type == 4:
-        return mt.contact(add)
-    elif type == 5:
+    elif msg1 == 3:
+        return mt.delete()
+    elif msg1 == 4:
+        return mt.add()
+    elif msg1 == 5:
         return pr.create()
+
+
+def check_input(msg1):
+    # global msg
+    return msg1.isdigit() and 1 <= int(msg1) <= 5
